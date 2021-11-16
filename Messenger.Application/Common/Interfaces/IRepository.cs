@@ -10,7 +10,7 @@ namespace Messenger.Application.Common.Interfaces
     {
         public Task CreateAsync(T entity);
         public Task<IReadOnlyCollection<T>> GetAllAsync();
-        public Task<T> GetByIdAsync(string id);
+        public Task<T> GetByIdAsync(Guid entityId);
         public Task UpdateAsync(T entity);
         public Task DeleteAsync(T entity);
     }

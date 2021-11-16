@@ -25,8 +25,8 @@ namespace Messenger.Infrastructure.Persistence
 
         public async Task DeleteAsync(Chat entity)
         {
-            var builder = Builders<Chat>.Filter;
-            var filter = builder.Eq(chat => chat.Id, entity.Id);
+            var filter = Builders<Chat>.Filter
+                .Eq(chat => chat.Id, entity.Id);
             await _chatsCollection.DeleteOneAsync(filter);
         }
 
@@ -36,18 +36,18 @@ namespace Messenger.Infrastructure.Persistence
             return await chats.ToListAsync();
         }
 
-        public async Task<Chat> GetByIdAsync(string id)
+        public async Task<Chat> GetByIdAsync(Guid entityId)
         {
-            var builder = Builders<Chat>.Filter;
-            var filter = builder.Eq(chat => chat.Id, id);
+            var filter = Builders<Chat>.Filter
+                .Eq(chat => chat.Id, entityId);
             var searchCursor = await _chatsCollection.FindAsync(filter);
             return await searchCursor.FirstAsync();
         }
 
         public async Task UpdateAsync(Chat entity)
         {
-            var filter = Builders<Chat>.Filter.Eq(chat => chat.Id, entity.Id);
-
+            var filter = Builders<Chat>.Filter
+                .Eq(chat => chat.Id, entity.Id);
             await _chatsCollection.ReplaceOneAsync(filter, entity);
         }
     }
